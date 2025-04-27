@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garry's Mod Loadingscreen</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="background-switcher"></div>
+    <div class="container">
+        <div class="top-banner">
+            Iron and Honor | Roleplay
+        </div>
+        <img id="logo" src="assets/imgs/transparent_logo.png" alt="Server Logo">
+        <div class="loading-section">
+            <div class="loading-bar-bg">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+            <div class="loading-text" id="loading-text">
+                <i class='bx bxs-map'></i> Lade <span id="gmod-map">{MAPNAME}</span>
+            </div>
+        </div>
+        <div class="server-info">
+            <div class="server-info-title">Gamemode</div>
+            <div class="server-info-mode"><i class='bx bxs-game'></i> <span id="gmod-gamemode">{GAMEMODE}</span></div>
+        </div>
+        <div class="social-links">
+            <div class="social-link discord">
+                <i class='bx bxl-discord-alt'></i> Discord: discord.gg/ironandhonor
+            </div>
+            <div class="social-link shop">
+                <i class='bx bxs-store'></i> Shop: shop.ironandhonor.de
+            </div>
+        </div>
+
+        <audio id="bgMusic" autoplay loop>
+            <source src="assets/The Rains Of Castomere.ogg" type="audio/ogg">
+        </audio>
+
+        <div class="footer">
+            <i class='bx bxs-copyright'></i> 2025 Lyve Software | Alle Rechte vorbehalten
+        </div>
+    </div>
+    <script>
+        const backgrounds = [
+            'assets/imgs/town_bg.jpg',
+            'assets/imgs/town2_bg.jpg',
+            'assets/imgs/horse_bg.jpg',
+            'assets/imgs/battle2_bg.jpg'
+        ];
+        let currentBg = 0;
+        const bgElement = document.querySelector('.background-switcher');
+        
+        function changeBackground() {
+            bgElement.style.backgroundImage = `url(${backgrounds[currentBg]})`;
+            currentBg = (currentBg + 1) % backgrounds.length;
+        }
+        
+        changeBackground();
+        setInterval(changeBackground, 8000);
+        
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 0.3;
+        
+        function tryPlayAudio() {
+            bgMusic.play().catch(function(error) {
+                console.log("Autoplay wurde verhindert, versuche erneut in 500ms");
+                setTimeout(tryPlayAudio, 500);
+            });
+        }
+        
+        tryPlayAudio();
+
+        setTimeout(() => {
+            if (!audioPlaying && bgMusic.readyState >= 2) {
+                bgMusic.volume = 0.3;
+                bgMusic.play()
+                    .then(() => {
+                        audioPlaying = true;
+                    })
+                    .catch((e) => {
+                        console.log("Autoplay prevented:", e);
+                    });
+            }
+        }, 1000);
+        
+        let percent = 0;
+        const bar = document.getElementById('loading-bar');
+        const text = document.getElementById('loading-text');
+        function simulateLoading() {
+            if (window.location.protocol === "file:") {
+                if (percent < 100) {
+                    percent += Math.random() * 2 + 1;
+                    if (percent > 100) percent = 100;
+                    bar.style.width = percent + "%";
+                    text.innerHTML = `<i class='bx bxs-map'></i> Lade <span id="gmod-map">rp_medieval_v2</span><br>${Math.floor(percent)}%</b>`;
+                    setTimeout(simulateLoading, 40);
+                } else {
+                    text.innerHTML = "<i class='bx bx-check-circle'></i> Bereit! Betrete nun die Welt...";
+                }
+            }
+        }
+        simulateLoading();
+
+        function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language) {
+            document.getElementById('gmod-servername').textContent = servername;
+            document.getElementById('gmod-map').textContent = mapname;
+            document.getElementById('gmod-players').textContent = maxplayers;
+            document.getElementById('gmod-gamemode').textContent = gamemode;
+            
+            if (volume !== undefined) {
+                bgMusic.volume = volume / 100;
+            }
+        }
+        function SetStatusChanged(status) {
+            document.getElementById('loading-text').innerHTML = status;
+        }
+        function SetFilesTotal(total) {}
+        function SetFilesNeeded(needed) {}
+        function DownloadingFile(file) {
+            document.getElementById('loading-text').innerHTML = "<i class='bx bx-download'></i> Lade Datei: " + file;
+        }
+        function SetProgress(percent) {
+            document.getElementById('loading-bar').style.width = percent + "%";
+        }
+    </script>
+</body>
+</html>

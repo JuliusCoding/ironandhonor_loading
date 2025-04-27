@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=MedievalSharp&display=swap');
+
+@font-face {
+    font-family: 'Cambria';
+    src: url('assets/fonts/Cambria.ttf') format('truetype');
+}
+
+* {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', 'Cambria', serif;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.background-switcher {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    transition: background-image 2s ease-in-out;
+    animation: bgfade 10s infinite alternate;
+}
+
+@keyframes bgfade {
+    0% { filter: brightness(0.8) blur(0px) saturate(1.0);}
+    100% { filter: brightness(1.0) blur(2px) saturate(1.2);}
+}
+
+.container {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background: rgba(0,0,0,0.6);
+    text-align: center;
+    backdrop-filter: blur(3px);
+}
+
+.top-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(49, 45, 38, 0.9);
+    color: #e8dcb5;
+    padding: 10px;
+    font-family: 'MedievalSharp', cursive;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    border-bottom: 2px solid #a17d42;
+}
+
+#logo {
+    width: 280px;
+    height: 280px;
+    margin-bottom: 30px;
+    margin-top: 70px;
+    z-index: 2;
+    filter: drop-shadow(0 0 40px #a17d42cc);
+    transition: transform 0.5s cubic-bezier(.4,2,.6,1);
+}
+
+.loading-section {
+    width: 370px;
+    max-width: 95vw;
+    margin-bottom: 32px;
+}
+
+.loading-bar-bg {
+    width: 100%;
+    height: 28px;
+    background: rgba(226, 215, 181, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(161, 125, 66, 0.4);
+    margin-bottom: 12px;
+    border: 1.5px solid #a17d42;
+    position: relative;
+}
+
+.loading-bar-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M0,10 L20,10 M10,0 L10,20" stroke="rgba(161, 125, 66, 0.15)" stroke-width="0.5"/></svg>');
+    background-size: 10px 10px;
+    border-radius: 14px;
+    opacity: 0.5;
+}
+
+.loading-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #a17d42 0%, #d4b775 100%);
+    border-radius: 16px 0 0 16px;
+    transition: width 0.25s cubic-bezier(.4,2,.6,1);
+    box-shadow: 0 0 16px rgba(212, 183, 117, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: skewX(-30deg);
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) skewX(-30deg); }
+    100% { transform: translateX(200%) skewX(-30deg); }
+}
+
+.loading-text {
+    color: #e8dcb5;
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    font-family: 'MedievalSharp', cursive;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+    margin-top: 2px;
+}
+
+.credits {
+    margin-top: 24px;
+    color: #e8dcb5;
+    font-size: 1.08rem;
+    font-family: 'MedievalSharp', cursive;
+    background: rgba(49, 45, 38, 0.75);
+    padding: 16px 28px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    display: inline-block;
+    border: 1.5px solid #a17d42;
+    backdrop-filter: blur(2px);
+    position: relative;
+}
+
+.credits::before, .credits::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #a17d42;
+}
+
+.credits::before {
+    top: -5px;
+    left: -5px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.credits::after {
+    bottom: -5px;
+    right: -5px;
+    border-left: none;
+    border-top: none;
+}
+
+.credit-names {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.credit-names span {
+    background: rgba(161, 125, 66, 0.25);
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+    color: #fff;
+    border: 1px solid #a17d42;
+    transition: all 0.3s;
+}
+
+.server-info {
+    margin-top: 22px;
+    color: #e8dcb5;
+    font-size: 1.01rem;
+    font-family: 'MedievalSharp', cursive;
+    background: rgba(49, 45, 38, 0.6);
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.3);
+    display: inline-block;
+    border: 1px solid #a17d42;
+    letter-spacing: 1px;
+}
+
+.server-info-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.social-links {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.social-link {
+    background: rgba(49, 45, 38, 0.7);
+    border: 1px solid #a17d42;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    color: #e8dcb5;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-link i {
+    font-size: 1.3rem;
+}
+
+.footer {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    width: 100vw;
+    text-align: center;
+    color: rgba(232, 220, 181, 0.7);
+    font-size: 0.97rem;
+    letter-spacing: 1px;
+    font-family: 'MedievalSharp', cursive;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+    pointer-events: none;
+}
+
+@media (max-width: 600px) {
+    .top-banner { font-size: 1rem; padding: 8px; }
+    #logo { width: 140px; height: 140px; margin-top: 60px; }
+    .loading-section { width: 95vw; }
+    .credits, .server-info { padding: 10px 6vw; font-size: 0.97rem; }
+    .social-links { flex-direction: column; align-items: center; gap: 10px; }
+    .credit-names { gap: 10px; }
+    .credit-names span { padding: 6px 12px; font-size: 0.9rem; }
+}
